@@ -1,0 +1,256 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/4.3.1/css/bootstrap.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/4.3.1/css/bootstrap.min.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.10.0-11/css/all.min.css">
+    
+    <!-- <link rel="stylesheet" href="style.css"> -->
+    <title></title>
+</head>
+
+<body>
+    <div class="container">
+        
+        <%if(user){%>
+        <h3>Hello <%=user.nick %></h3>
+        <%}%>
+
+        <!-- required bootstrap js -->
+        <!-- data-toggle="modal" data-target="#login" -->
+        <button type="submit" name="commit" class="btn btn-outline-primary btn-sm" id='loginBtn'>
+            Login/Signup
+        </button>
+        <div class="modal fade" id="login" role="dialog">
+            <div class="modal-dialog modal-md">
+                <div class="modal-content">
+                    <div class="modal-header">
+                        <h4 class="modal-title">Login</h4>
+                        <button type="button" class="close" data-dismiss="modal">&times;</button>
+                    </div>
+                    <div class="modal-body">
+
+                        <form action="/users/login" method="POST">
+                            <div class="input-group mb-3">
+                                <div class="input-group-prepend">
+                                    <span class="input-group-text" id="inputGroup-sizing-sm">
+                                        <i class="fa fa-id-card" aria-hidden="true"></i>
+                                    </span>
+                                </div>
+                                <input type="text" class="form-control" placeholder="Id" aria-label="Email"
+                                    aria-describedby="basic-addon1" name="userId" required>
+                            </div>
+                            <div class="input-group mb-3">
+                                <div class="input-group-prepend">
+                                    <span class="input-group-text" id="inputGroup-sizing-sm">
+                                        <i class="fa fa-lock"></i>
+                                    </span>
+                                </div>
+                                <input type="password" class="form-control" placeholder="Password" aria-label="Password"
+                                    aria-describedby="basic-addon1" name="password" required>
+                            </div>
+                            <button type="submit" name="commit" class="btn btn-primary btn-lg btn-block">
+                                <span>Login <i class="fa fa-sign-in"></i></span>
+                            </button>
+                        </form>
+
+                        <div class="text-center">
+                            <a class="" href="" data-dismiss="modal" data-toggle="modal"
+                                data-target="#signup">Signup</a>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="modal fade" id="signup" role="dialog">
+            <div class="modal-dialog modal-md">
+                <div class="modal-content">
+                    <div class="modal-header">
+                        <h4 class="modal-title">Signup</h4>
+                        <button type="button" class="close" data-dismiss="modal">&times;</button>
+                    </div>
+                    <div class="modal-body">
+                        <!-- form -->
+                        <form action="/users/register" method="post" id = "signup_form">
+                        <div class="input-group mb-3">
+                            <div class="input-group-prepend">
+                                <span class="input-group-text" id="inputGroup-sizing-sm">
+                                    <i class="fa fa-user"></i>
+                                </span>
+                            </div>
+                            <input type="text" class="form-control" placeholder="Nick Name" aria-label="Name"
+                                aria-describedby="basic-addon1" name="nick" id="signup_nick" required>
+                        </div>
+                        <div class="input-group mb-3">
+                            <div class="input-group-prepend">
+                                <span class="input-group-text" id="inputGroup-sizing-sm">
+                                    <i class="fa fa-id-card" aria-hidden="true"></i>
+                                </span>
+                            </div>
+                            
+                            <input type="text" class="form-control" placeholder="ID" aria-label="Email"
+                                aria-describedby="basic-addon1" name="userId" id ="reg_userId" required>
+                                <div class="input-group-append">
+                                    <button class="input-group-text" id="id_check" type="button">
+                                        Check
+                                    </button>
+                                </div>    
+                        </div>
+                        <div class="input-group mb-3">
+                            <div class="input-group-prepend">
+                                <span class="input-group-text" id="inputGroup-sizing-sm">
+                                    <i class="fa fa-lock"></i>
+                                </span>
+                            </div>
+                            <input type="password" class="form-control" placeholder="Password" aria-label="Password"
+                                aria-describedby="basic-addon1" name="password" id = "signup_pwd" 
+                                required>
+                        </div>
+                        <div class="input-group mb-3">
+                            <div class="input-group-prepend">
+                                <span class="input-group-text" id="inputGroup-sizing-sm">
+                                    <i class="fa fa-lock"></i>
+                                </span>
+                            </div>
+                            <input type="password" class="form-control" placeholder="Password confirmation"
+                                aria-label="Password confirmation" aria-describedby="basic-addon1" name="password2" id = "signup_pwd2" 
+                                required>
+                        </div>
+                        
+                        <button type="button" name="commit" class="btn btn-primary btn-lg btn-block" id="signup_submit">
+                            <span>Signup <i class="fa fa-sign-in"></i></span>
+                        </button>
+                    </form>
+                        <!-- ./form -->
+                        <div class="text-center">
+                            <a class="" href="" data-dismiss="modal" data-toggle="modal" data-target="#login">Login</a>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+
+    <!-- <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.4.1/jquery.slim.min.js"></script> -->
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.15.0/umd/popper.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/4.3.1/js/bootstrap.min.js"></script>
+    
+    <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js" integrity="sha384-JjSmVgyd0p3pXB1rRibZUAYoIIy6OrQ6VrjIEaFf/nJGzIxFDsf4x0xIM+B07jRM" crossorigin="anonymous"></script>
+    <script>
+        $(() => {
+            setLoginBtnTxt();
+            if ('<%=message%>' != '') { alert('<%=message%>') }
+
+            $('#loginBtn').click(function () {
+                if ('<%=JSON.stringify(user)%>' == 'null') {
+                    $('#login').modal();
+                } else {
+                    if (confirm('logout?')) {
+                        location.href = '/users/logout';
+                    }
+                }
+            });
+
+
+            function setLoginBtnTxt() {
+                let btn_text = '<%=JSON.stringify(user)%>' == 'null' ? 'login/Signup' : 'logout';
+                $('#loginBtn').text(btn_text);
+            }
+            $('#id_check').click(function () {
+                userExist('사용할 수 있는 아이디 입니다.');
+            })
+            let id_current = false;
+            function userExist(elseMSG) {
+                if (!$("#reg_userId").val()) {
+                    alert('아이디를 입력해 주세요');
+                    id_current = false
+                    isValid(false, $("#reg_userId"));
+                    return;
+                }
+                $.ajax({
+                    type: "get",
+                    url: "users/userExist",
+                    data: { "userId": $("#reg_userId").val() },
+                    dataType: "JSON",
+                    success: function (rs) {
+                        if (rs) {
+                            alert('이미 사용 중인 아이디 입니다');
+                        } else if (elseMSG) {
+                            alert(elseMSG)
+                        }
+                        id_current = !rs;
+                        isValid(id_current, $("#reg_userId"));
+                    }
+                });
+
+            }
+            $('#signup_submit').click(function () {
+                $("#reg_userId").val()
+                $('#signup_pwd').val()
+                if (!id_current) {
+                    alert('아이디를 확인해 주세요');
+                    return;
+                } else if ((!$('#signup_pwd').val()) || (!$('#signup_pwd2').val())) {
+                    alert('비밀번호를 입력해주세요')
+                    return;
+                }
+                else if ($('#signup_pwd').val() != $('#signup_pwd2').val()) {
+                    alert('비밀번호가 일치하지 않습니다')
+                    return;
+                } else if (!$('#signup_nick').val()) {
+                    alert('닉네임을 입력해 주세요');
+                    return;
+                }
+
+                $("#signup_form").submit();
+            });
+
+            function isValid(flag, selector) {
+                if (flag) {
+                    selector.removeClass("is-invalid")
+                    selector.addClass("is-valid")
+                } else {
+                    selector.removeClass("is-valid")
+                    selector.addClass("is-invalid")
+                }
+            }
+
+            function chekPassword(insertID, insertPwd) {
+
+                var check1 = /^(?=.*[a-zA-Z])(?=.*[0-9]).{10,12}$/.test(insertPwd); //영문,숫자
+                var check2 = /^(?=.*[a-zA-Z])(?=.*[^a-zA-Z0-9]).{10,12}$/.test(insertPwd); //영문,특수문자
+                var check3 = /^(?=.*[^a-zA-Z0-9])(?=.*[0-9]).{10,12}$/.test(insertPwd); //특수문자, 숫자
+
+                if (!(check1 || check2 || check3)) {
+                    alert("사용할 수 없는 조합입니다.");
+                    return false;
+                }
+                if (/(\w)\1\1/.test(insertPwd)) {
+                    alert('같은 문자를 3번 이상 사용하실 수 없습니다.');
+                    return false;
+                }
+                if (insertPwd.search(insertID) > -1) {
+
+                    alert("비밀번호에 아이디가 포함되었습니다.");
+                    return false;
+                }
+
+                return true;
+
+            }
+
+
+
+
+        });
+
+    </script>
+</body>
+
+</html>
