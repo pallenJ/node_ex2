@@ -22,7 +22,8 @@ const userSchema = new Schema({
     createdAt:{
         type: Date,
         default:currentDate,
-    }
+    },
+    articles:[{type:Number,ref:'Article'}]
 });
 userSchema.plugin(passportLocalMongoose,{ 
     usernameField:'userId'

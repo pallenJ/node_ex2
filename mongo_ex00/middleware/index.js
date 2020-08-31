@@ -15,3 +15,12 @@ exports.isLoggedIn = (req,res,next)=>{
         res.redirect('/users/login');
     }
 }
+
+exports.isAdmin = (req,res,next) =>{
+    if(req.user&&req.user.admin){
+        next();
+    }else{
+        console.log('Lack of authority');
+        res.redirect('/users/login');
+    }
+}

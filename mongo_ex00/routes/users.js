@@ -3,7 +3,6 @@ var express = require('express');
 const User = require('../schemas/user');
 const passport = require('passport');
 const { isLoggedIn, isNotLoggedIn } = require('../middleware');
-const { request } = require('express');
 
 var router = express.Router();
 
@@ -54,7 +53,7 @@ router.get('/login', (req, res) => {
 
 router.post('/login', isNotLoggedIn, postLogin);
 
-router.get('/logout', (req, res) => {
+router.get('/logout',isLoggedIn, (req, res) => {
   req.logout();
   res.redirect('/');
 });
