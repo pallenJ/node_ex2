@@ -3,17 +3,9 @@ var express = require('express');
 const User = require('../schemas/user');
 const passport = require('passport');
 const { isLoggedIn, isNotLoggedIn } = require('../middleware');
+const Article = require('../schemas/article');
 
 var router = express.Router();
-
-const postLogin = passport.authenticate("local", {
-  successRedirect: '/',
-  failureRedirect: '/',
-  successMessage: `환영합니다`,
-  failureMessage: '로그인에 실패했습니다', 
-});
-
-
 
 /* GET users listing. */
 router.get('/', function (req, res, next) {
@@ -51,11 +43,13 @@ router.get('/login', (req, res) => {
   res.send('login Page(GET)');
 });
 
-router.post('/login', isNotLoggedIn, postLogin);
+router.post('/login', isNotLoggedIn, passport.authenticate('local'),function (req,res) {  
+  res.json(req.user);
+});
 
 router.get('/logout',isLoggedIn, (req, res) => {
   req.logout();
-  res.redirect('/');
+  res.json();
 });
 
 router.get('/userExist', async (req, res) => {
@@ -72,5 +66,22 @@ router.get('/userExist', async (req, res) => {
   }
 });
 
+router.get('/myArticles', async(req,res)=>{
+  const article_list = await Article.find({_creator:req.user._id});
+  res.json(article_list)
+})
+
+router.get('/articles/:id',async(req,res)=>{
+  const user_id = (await User.findOne({userId:req.params.id},{_id:true}))._id;
+  await Article.find({_creator:user_id})
+    .populate('_creator')
+      .exec((err,data)=>{res.json(data)});
+
+})
+
+router.get('/myInfo',isLoggedIn,async(req,res)=>{
+  
+  res.json(req.user);
+});
 
 module.exports = router;

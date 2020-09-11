@@ -1,18 +1,23 @@
 exports.isNotLoggedIn = (req,res,next)=>{
+
     if(req.user){
         console.log('already login');
-        res.redirect('/');
+        //res.redirect('/');
+        res.json(req.user);
     }else{
         next();
     }
 }
 
 exports.isLoggedIn = (req,res,next)=>{
+    console.log('asdf:'+JSON.stringify(req.session));
+    console.log('asdf:'+JSON.stringify(req.user));
+
     if(req.user){
         next();
     }else{
         console.log('login please');
-        res.redirect('/users/login');
+        res.json({});
     }
 }
 
